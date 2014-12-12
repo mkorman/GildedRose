@@ -154,42 +154,66 @@ namespace GildedRose.Tests
         [Test]
         public void TestConcertPassDegradation()
         {
-            var elixir = target.Items.First(i => i.Name.Contains("concert"));
+            var pass = target.Items.First(i => i.Name.Contains("concert"));
 
-            Assert.That(elixir.SellIn, Is.EqualTo(15));
-            Assert.That(elixir.Quality, Is.EqualTo(20));
-
+            Assert.That(pass.SellIn, Is.EqualTo(15));
+            Assert.That(pass.Quality, Is.EqualTo(20));
 
             // Aging up to 10 days before concert
             for (int i = 1; i <= 5; i++)
             {
                 target.UpdateQuality();
-                Assert.That(elixir.SellIn, Is.EqualTo(15 - i));
-                Assert.That(elixir.Quality, Is.EqualTo(20 + i));
+                Assert.That(pass.SellIn, Is.EqualTo(15 - i));
+                Assert.That(pass.Quality, Is.EqualTo(20 + i));
             }
 
             // Aging up to 5 days before concert
             for (int i = 1; i <= 5; i++)
             {
                 target.UpdateQuality();
-                Assert.That(elixir.SellIn, Is.EqualTo(10 - i));
-                Assert.That(elixir.Quality, Is.EqualTo(25 + 2*i));
+                Assert.That(pass.SellIn, Is.EqualTo(10 - i));
+                Assert.That(pass.Quality, Is.EqualTo(25 + 2*i));
             }
 
             // Aging up to concert day
             for (int i = 1; i <= 5; i++)
             {
                 target.UpdateQuality();
-                Assert.That(elixir.SellIn, Is.EqualTo(5 - i));
-                Assert.That(elixir.Quality, Is.EqualTo(35 + 3 * i));
+                Assert.That(pass.SellIn, Is.EqualTo(5 - i));
+                Assert.That(pass.Quality, Is.EqualTo(35 + 3 * i));
             }
 
             // Aging after concert
             for (int i = 1; i <= 5; i++)
             {
                 target.UpdateQuality();
-                Assert.That(elixir.SellIn, Is.EqualTo(0 - i));
-                Assert.That(elixir.Quality, Is.EqualTo(0));
+                Assert.That(pass.SellIn, Is.EqualTo(0 - i));
+                Assert.That(pass.Quality, Is.EqualTo(0));
+            }
+        }
+
+        [Test]
+        public void TestConjuredItemtDegradation()
+        {
+            var vest = target.Items.First(i => i.Name.Contains("Conjured"));
+
+            Assert.That(vest.SellIn, Is.EqualTo(3));
+            Assert.That(vest.Quality, Is.EqualTo(6));
+
+            // Aging before expiry date
+            for (int i = 1; i <= 10; i++)
+            {
+                target.UpdateQuality();
+                Assert.That(vest.SellIn, Is.EqualTo(3 - i));
+                Assert.That(vest.Quality, Is.EqualTo(6 - 2*i));
+            }
+
+            // Aging after expiry date & quality drop
+            for (int i = 1; i <= 5; i++)
+            {
+                target.UpdateQuality();
+                Assert.That(vest.SellIn, Is.EqualTo(0 - i));
+                Assert.That(vest.Quality, Is.EqualTo(0));
             }
         }
     }
