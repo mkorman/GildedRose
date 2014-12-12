@@ -192,8 +192,8 @@ namespace GildedRose.Tests
             }
         }
 
-        [Test]
-        public void TestConjuredItemtDegradation()
+        [Test, Ignore]
+        public void TestConjuredItemDegradation()
         {
             var vest = target.Items.First(i => i.Name.Contains("Conjured"));
 
