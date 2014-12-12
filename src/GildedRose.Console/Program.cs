@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRose.Console
 {
@@ -93,6 +94,18 @@ namespace GildedRose.Console
             }
         }
 
+        private void UpdateQualityForConjuredItem(Item item)
+        {
+            item.Quality = Math.Max(item.Quality - 2, 0);
+
+            item.SellIn--;
+
+            if (item.SellIn < 0)
+            {
+                item.Quality = Math.Max(item.Quality - 2, 0);
+            }            
+        }
+
         private void UpdateQualityForNormalItem(Item item)
         {
             if (item.Quality > 0)
@@ -124,6 +137,10 @@ namespace GildedRose.Console
             else if (item.Name == "Aged Brie")
             {
                 UpdateQualityForVintageItem(item);
+            }
+            else if (item.Name == "Conjured Mana Cake")
+            {
+                UpdateQualityForConjuredItem(item);
             }
             else
             {

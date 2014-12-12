@@ -192,28 +192,28 @@ namespace GildedRose.Tests
             }
         }
 
-        [Test, Ignore]
+        [Test]
         public void TestConjuredItemDegradation()
         {
-            var vest = target.Items.First(i => i.Name.Contains("Conjured"));
+            var conjuredItem = target.Items.First(i => i.Name.Contains("Conjured"));
 
-            Assert.That(vest.SellIn, Is.EqualTo(3));
-            Assert.That(vest.Quality, Is.EqualTo(6));
+            Assert.That(conjuredItem.SellIn, Is.EqualTo(3));
+            Assert.That(conjuredItem.Quality, Is.EqualTo(6));
 
             // Aging before expiry date
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 target.UpdateQuality();
-                Assert.That(vest.SellIn, Is.EqualTo(3 - i));
-                Assert.That(vest.Quality, Is.EqualTo(6 - 2*i));
+                Assert.That(conjuredItem.SellIn, Is.EqualTo(3 - i));
+                Assert.That(conjuredItem.Quality, Is.EqualTo(6 - 2*i));
             }
 
             // Aging after expiry date & quality drop
             for (int i = 1; i <= 5; i++)
             {
                 target.UpdateQuality();
-                Assert.That(vest.SellIn, Is.EqualTo(0 - i));
-                Assert.That(vest.Quality, Is.EqualTo(0));
+                Assert.That(conjuredItem.SellIn, Is.EqualTo(0 - i));
+                Assert.That(conjuredItem.Quality, Is.EqualTo(0));
             }
         }
     }
