@@ -40,111 +40,7 @@ namespace GildedRose.Console
         {
             foreach (var item in Items)
             {
-                UpdateQualityFor(item);
-            }
-        }
-
-        private void UpdateQualityForLegendaryItem(Item item)
-        {
-            return;
-        }
-
-        private void UpdateQualityForEventTicket(Item item)
-        {
-            if (item.Quality < 50)
-            {
-                item.Quality = item.Quality + 1;
-
-                if (item.SellIn < 11)
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
-
-                if (item.SellIn < 6)
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
-            }
-            item.SellIn--;
-            if (item.SellIn < 0)
-                item.Quality = 0;            
-        }
-
-        private void UpdateQualityForVintageItem(Item item)
-        {
-            if (item.Quality < 50)
-            {
-                item.Quality++;
-            }
-
-            item.SellIn--;
-
-            if (item.SellIn < 0)
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality++;
-                }
-            }
-        }
-
-        private void UpdateQualityForConjuredItem(Item item)
-        {
-            item.Quality = Math.Max(item.Quality - 2, 0);
-
-            item.SellIn--;
-
-            if (item.SellIn < 0)
-            {
-                item.Quality = Math.Max(item.Quality - 2, 0);
-            }            
-        }
-
-        private void UpdateQualityForNormalItem(Item item)
-        {
-            if (item.Quality > 0)
-            {
-                item.Quality = item.Quality - 1;
-            }
-
-            item.SellIn--;
-
-            if (item.SellIn < 0)
-            {
-                if (item.Quality > 0)
-                {
-                    item.Quality--;
-                }
-            }
-        }
-
-        public void UpdateQualityFor(Item item)
-        {
-            if (item.Name == "Sulfuras, Hand of Ragnaros")
-            {
-                UpdateQualityForLegendaryItem(item);
-            }
-            else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-            {
-                UpdateQualityForEventTicket(item);
-            }
-            else if (item.Name == "Aged Brie")
-            {
-                UpdateQualityForVintageItem(item);
-            }
-            else if (item.Name == "Conjured Mana Cake")
-            {
-                UpdateQualityForConjuredItem(item);
-            }
-            else
-            {
-                UpdateQualityForNormalItem(item);
+                item.UpdateQuality();
             }
         }
     }
@@ -157,5 +53,4 @@ namespace GildedRose.Console
 
         public int Quality { get; set; }
     }
-
 }

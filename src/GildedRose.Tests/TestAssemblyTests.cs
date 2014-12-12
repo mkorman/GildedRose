@@ -30,15 +30,7 @@ namespace GildedRose.Tests
                     },
                     new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
                 }
-
             };
-            ;
-        }
-
-        [Test]
-        public void TestTheTruth()
-        {
-            Assert.IsTrue(true);
         }
 
         [Test]
